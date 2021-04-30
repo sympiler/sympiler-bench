@@ -1,0 +1,3 @@
+[submodule "sympiler"]
+	path = sympiler
+	url = https://github.com/sympiler/sympiler.git
