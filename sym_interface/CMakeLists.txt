@@ -6,6 +6,7 @@ include_directories(includes
         ${SYMPILER_UTIL_INC}
         ${SYMPILER_UTILE_INC}
         ${SYMPILER_SPARSE_BLAS_INC}
+        ${SYMPILER_SPARSE_BLASP_INC}
         ${SYMPILER_LBC_INC}
         ${METIS_INCLUDE_DIR}
         ${METIS_INCLUDES}
@@ -31,3 +32,6 @@ set(SYMPILERD_SOURCE_FILES
 
 add_executable(sym_sptrsv ${SYMPILERD_SOURCE_FILES}
         sptrsv_demo.cpp )
+
+add_executable(sym_cholesky ${SYMPILERD_SOURCE_FILES}
+        cholesky_demo.cpp )
