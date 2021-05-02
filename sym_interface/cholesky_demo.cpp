@@ -72,6 +72,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  sym_chol->ldl_variant = 4;
  sym_chol->req_ref_iter = 0;
  sym_chol->solver_mode = 0;
+// sym_chol->sym_order = sym_lib::parsy::S_METIS;
  //sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_METIS;
  timing_measurement symbolic_time, factor_time, solve_time;
  symbolic_time.start_timer();
