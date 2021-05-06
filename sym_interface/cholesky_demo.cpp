@@ -7,7 +7,7 @@
 #include <test_utils.h>
 #include <omp.h>
 #include <metis_interface.h>
-#include <linear_solver_wrapper.h>
+#include <parsy/cholesky_solver.h>
 #include "FusionDemo.h"
 
 using namespace sym_lib;
@@ -58,7 +58,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
   p3 = atoi(argv[3]);
  /// Re-ordering L matrix
 
-
+/// Method 1 of calling Cholesky
  auto *solution = new double[n];
  std::fill_n(solution, n, 1.0);
 
@@ -88,6 +88,35 @@ int sym_cholesky_demo(int argc, char *argv[]){
  sym_chol->compute_norms();
 
 
+/// Method 2 of calling Cholesky
+ auto *rhs = new double[3*n];
+ std::fill_n(rhs, 3*n, 1.0);
+ auto *sym_chol1 = new sym_lib::parsy::SolverSettings(H);
+ sym_chol1->ldl_variant = 1;
+ sym_chol1->req_ref_iter = 0;
+ sym_chol1->solver_mode = 0;
+// sym_chol->sym_order = sym_lib::parsy::S_METIS;
+ //sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_METIS;
+ timing_measurement symbolic_time1, factor_time1, solve_time1;
+ symbolic_time1.start_timer();
+ sym_chol1->symbolic_analysis();
+ symbolic_time1.measure_elapsed_time();
+ factor_time1.start_timer();
+ sym_chol1->numerical_factorization();
+ factor_time1.measure_elapsed_time();
+ solve_time1.start_timer();
+ double *x1 = sym_chol1->solve_only(rhs, 3);
+ solve_time1.measure_elapsed_time();
+
+ sym_chol1->compute_norms(rhs);
+
+ //print_vec("x: ", 0, 10, x); std::cout<<"\n";
+ //print_vec("x[0]: ", 0, 10, x1); std::cout<<"\n";
+ //print_vec("x[1]: ", 0, 10, x1 + n); std::cout<<"\n";
+ //print_vec("x[2]: ", 0, 10, x1 + 2*n); std::cout<<"\n";
+
+
+
  if(header){
   print_common_header();
   std::cout<<"Tool Name,LBC P1,LBC P2,";
@@ -105,11 +134,16 @@ int sym_cholesky_demo(int argc, char *argv[]){
  PRINT_CSV(solve_time.elapsed_time);
  PRINT_CSV(sym_chol->res_l1);
 
+ PRINT_CSV(solve_time1.elapsed_time);
+ PRINT_CSV(sym_chol1->res_l1);
  delete []solution;
  delete A;
  delete L1_csc;
  delete H;
  delete sym_chol;
+
+ delete sym_chol1;
+ delete []rhs;
 
  return 0;
 }
