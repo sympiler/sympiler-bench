@@ -115,8 +115,6 @@ int sym_cholesky_demo(int argc, char *argv[]){
  //print_vec("x[1]: ", 0, 10, x1 + n); std::cout<<"\n";
  //print_vec("x[2]: ", 0, 10, x1 + 2*n); std::cout<<"\n";
 
-
-
  if(header){
   print_common_header();
   std::cout<<"Tool Name,LBC P1,LBC P2,";
@@ -136,6 +134,8 @@ int sym_cholesky_demo(int argc, char *argv[]){
 
  PRINT_CSV(solve_time1.elapsed_time);
  PRINT_CSV(sym_chol1->res_l1);
+
+
  delete []solution;
  delete A;
  delete L1_csc;
