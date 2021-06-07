@@ -9,9 +9,10 @@ project(sympiler_bench)
 
 set(SYMPILER_UTIL_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/utils/includes")
 set(SYMPILER_UTILE_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/utils/external/includes")
+set(SYMPILER_UTIL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/utils/")
 set(SYMPILER_SPARSE_BLAS_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/sparse_blas/includes")
 set(SYMPILER_SPARSE_BLASP_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/sparse_blas/includes/parsy")
-set(SYMPILER_LBC_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/lbc/src/includes")
+set(SYMPILER_LBC_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/lbc/")
 
 
 if(APPLE)
@@ -38,26 +39,6 @@ endif()
 
 
 
-find_package(METIS REQUIRED)
-if(NOT METIS_VERSION_OK)
-    download_project(PROJ metis
-            GIT_REPOSITORY https://github.com/cheshmi/METIS.git  # https://github.com/KarypisLab/METIS.git
-            # BUILD_IN_SOURCE 1
-            #PREFIX  ${metis_BINARY_DIR}
-            #     URL http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz
-            PREFIX  ${NASOQ_EXTERNAL}/metis/
-            #SOURCE_DIR ${NASOQ_EXTERNAL}/metis/metis-src/
-            BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/metis/
-            UPDATE_DISCONNECTED 1
-            #CMAKE_ARGS  -DGKLIB_PATH=${metis_SOURCE_DIR}/GKlib/
-            # BUILD_COMMAND ${MAKE_EXE}
-            )
-    add_subdirectory(${metis_SOURCE_DIR})
-    set(METIS_INCLUDE_DIR ${metis_SOURCE_DIR}/include)
-    set(METIS_INCLUDES ${metis_SOURCE_DIR}/include/)
-    set(METIS_LIBRARY ${NASOQ_ROOT_DIR}/lib/)
-    set(METIS_LIBRARIES ${NASOQ_ROOT_DIR}/lib/)
-endif()
 
 
 #find_package(MKL REQUIRED)
@@ -124,16 +105,8 @@ endif()
 #    set(PAPI_LIB_NAME "")
 #endif()
 
-set(ALL_LIBS
-        ${MKL_LIB_NAME}
-        ${PAPI_LIB_NAME}
-        ${PAPI_LIB_NAME2}
-        ${METIS_LIB_NAME}
-        )
 
 
-set(ALL_SOURCE_FILES
-        ${METIS_SOURCE_FILES})
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -w -m64")
