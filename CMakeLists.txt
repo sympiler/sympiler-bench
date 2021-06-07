@@ -1,8 +1,8 @@
 cmake_minimum_required( VERSION 2.5)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/sympiler/cmake)
-include(DownloadProject)
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/sympiler/cmake/)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 
 project(sympiler_bench)
 
@@ -41,45 +41,6 @@ endif()
 
 
 
-#find_package(MKL REQUIRED)
-
-### Find Intel MKL if available
-#if(EXISTS "$ENV{MKLROOT}" OR EXISTS "$ENV{MKL_ROOT}")
-#    if(EXISTS "$ENV{MKLROOT}")
-#        set(MKLPATH "$ENV{MKLROOT}")
-#    else()
-#        set(MKLPATH "$ENV{MKL_ROOT}")
-#    endif()
-#
-#    if(APPLE)
-#        #find_package(OpenMP REQUIRED)
-#        set(MKL_INC "${MKLPATH}/include")
-#        set(MKL_LIB "${MKLPATH}/lib")
-#        set(MKL_LIB2 "${MKLPATH}/../compiler/lib")
-#    endif()
-#    if(UNIX AND NOT APPLE)
-#        set(MKL_INC "${MKLPATH}/include")
-#        set(MKL_LIB "${MKLPATH}/lib/intel64")
-#        # for iomp lib
-#        set(MKL_LIB2 "${MKLPATH}/../compiler/lib/intel64")
-#    endif()
-#    add_definitions(-DMKL)
-#    set(MKL 1)
-#    set(MKL_LIB_NAME "mkl_intel_lp64"
-#            "pthread"
-#            "mkl_intel_thread"
-#            "iomp5"
-#            "mkl_sequential"
-#            "mkl_core"
-#            #"mkl_sequential"
-#                     )
-##                     "mkl_intel_ilp64")
-#    message(STATUS "Intel MKL found")
-#else()
-#    message(STATUS "Intel MKL not found, building without MKL.")
-#    set(MKL_LIB_NAME "")
-#    set(MKL 0)
-#endif()
 
 ### Find PAPI for Profiling
 ### Can be cloned directly from https://bitbucket.org/icl/papi.git
@@ -106,7 +67,13 @@ endif()
 #endif()
 
 
-
+include_directories(includes
+        ${SYMPILER_UTIL_INC}
+        ${SYMPILER_UTILE_INC}
+        ${SYMPILER_SPARSE_BLAS_INC}
+        ${SYMPILER_SPARSE_BLASP_INC}
+        ${SYMPILER_LBC_ROOT}/src/include/
+        )
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -w -m64")

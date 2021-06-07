@@ -22,7 +22,9 @@ You can follow the [sympiler installation instructions](https://github.com/sympi
 
 
 ## Running the benchmark
+### Cholesky
+
 
 
 ## Adding a new tool
-
+To add 

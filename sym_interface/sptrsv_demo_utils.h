@@ -8,7 +8,7 @@
 #include <sparse_inspector.h>
 #include <lbc.h>
 
-#include "FusionDemo.h"
+#include "../common/FusionDemo.h"
 #include "sparse_blas_lib.h"
 
 namespace sym_lib {

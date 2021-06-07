@@ -8,11 +8,11 @@
 #include <omp.h>
 #include <metis_interface.h>
 #include <parsy/cholesky_solver.h>
-#include "FusionDemo.h"
-
+#include "../common/FusionDemo.h"
+#include "../common/label.h"
 using namespace sym_lib;
 
-/// Evaluate sptrsv
+/// Evaluate cholesky
 /// \return
 int sym_cholesky_demo(int argc, char *argv[]);
 
@@ -31,6 +31,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  int num_threads = 6;
  int p2 = -1, p3 = 4000; // LBC params
  int header = 0;
+ int mode = 1;
  int *perm;
  std::string matrix_name;
  std::vector<timing_measurement> time_array;
@@ -51,13 +52,14 @@ int sym_cholesky_demo(int argc, char *argv[]){
    return -1;
   n = L1_csc->n;
  }
+ if(argc >= 2)
+  num_threads = atoi(argv[2]);
  if(argc >= 3)
-  p2 = atoi(argv[2]);
- omp_set_num_threads(num_threads);
+  header = atoi(argv[3]);
  if(argc >= 4)
-  p3 = atoi(argv[3]);
- /// Re-ordering L matrix
+  mode = atoi(argv[4]);
 
+ omp_set_num_threads(num_threads);
 /// Method 1 of calling Cholesky
  auto *solution = new double[n];
  std::fill_n(solution, n, 1.0);
@@ -69,7 +71,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  H->packed = 1;
 /// Solving the linear system
  auto *sym_chol = new sym_lib::parsy::SolverSettings(H, solution);
- sym_chol->ldl_variant = 4;
+ sym_chol->ldl_variant = mode;
  sym_chol->req_ref_iter = 0;
  sym_chol->solver_mode = 0;
 // sym_chol->sym_order = sym_lib::parsy::S_METIS;
@@ -87,8 +89,8 @@ int sym_cholesky_demo(int argc, char *argv[]){
 
  sym_chol->compute_norms();
 
-
-/// Method 2 of calling Cholesky
+#ifdef MRHS
+/// Method 2 of calling Cholesky with multiple RHS
  auto *rhs = new double[3*n];
  std::fill_n(rhs, 3*n, 1.0);
  auto *sym_chol1 = new sym_lib::parsy::SolverSettings(H);
@@ -107,24 +109,25 @@ int sym_cholesky_demo(int argc, char *argv[]){
  solve_time1.start_timer();
  double *x1 = sym_chol1->solve_only(rhs, 3);
  solve_time1.measure_elapsed_time();
-
  sym_chol1->compute_norms(rhs);
-
  //print_vec("x: ", 0, 10, x); std::cout<<"\n";
  //print_vec("x[0]: ", 0, 10, x1); std::cout<<"\n";
  //print_vec("x[1]: ", 0, 10, x1 + n); std::cout<<"\n";
  //print_vec("x[2]: ", 0, 10, x1 + 2*n); std::cout<<"\n";
+#endif
 
  if(header){
   print_common_header();
-  std::cout<<"Tool Name,LBC P1,LBC P2,";
-  std::cout<<"Symbolic Analysis Time (sec),Factorization Time (sec),Solve Time (sec),";
-  std::cout<<"Residual,"
-  "\n";
+  std::cout<<TOOL<<",LBC P1,LBC P2,";
+  std::cout<<SYM_TIME<<","<<FCT_TIME","<<SOLVE_TIME<<","<<RESIDUAL<<",";
+  std::cout<<"\n";
  }
 
  print_common(matrix_name, "Cholesky", "", L1_csc, L1_csc, num_threads);
- PRINT_CSV("Sympiler");
+ if(mode == 1)
+  PRINT_CSV("Sequential Sympiler");
+ else
+  PRINT_CSV("Parallel Sympiler");
  PRINT_CSV(p2);
  PRINT_CSV(p3);
  PRINT_CSV(symbolic_time.elapsed_time);
@@ -132,9 +135,12 @@ int sym_cholesky_demo(int argc, char *argv[]){
  PRINT_CSV(solve_time.elapsed_time);
  PRINT_CSV(sym_chol->res_l1);
 
+#ifdef MRHS
  PRINT_CSV(solve_time1.elapsed_time);
  PRINT_CSV(sym_chol1->res_l1);
-
+ delete sym_chol1;
+ delete []rhs;
+#endif
 
  delete []solution;
  delete A;
@@ -142,8 +148,6 @@ int sym_cholesky_demo(int argc, char *argv[]){
  delete H;
  delete sym_chol;
 
- delete sym_chol1;
- delete []rhs;
 
  return 0;
 }
