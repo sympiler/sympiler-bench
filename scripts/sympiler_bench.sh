@@ -3,6 +3,9 @@
 #SBATCH --cpus-per-task=40
 #SBATCH --export=ALL
 #SBATCH --job-name="sym"
+#SBATCH --mail-type=begin  # email me when the job starts
+#SBATCH --mail-type=end    # email me when the job finishes
+#SBATCH --mail-user=kazem.cheshmi@gmail.com
 #SBATCH --nodes=1
 #SBATCH --output="symbench.%j.%N.out"
 #SBATCH -t 24:00:00
