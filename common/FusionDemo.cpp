@@ -133,12 +133,11 @@ namespace sym_lib{
  }
 
  void print_common(std::string matrix_name, std::string variant, std::string strategy,
-   CSC *B, CSC *L, int num_threads){
+   CSC *B, int l_nnz, int num_threads){
   PRINT_CSV(matrix_name);
   PRINT_CSV(B->m);
   PRINT_CSV(B->nnz);
-  if(L)
-   PRINT_CSV(L->nnz);
+  PRINT_CSV(l_nnz);
   PRINT_CSV(variant);
   PRINT_CSV(strategy);
 #ifdef METIS

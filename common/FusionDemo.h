@@ -79,7 +79,7 @@ namespace sym_lib{
 
  void print_common_header();
  void print_common(std::string matrix_name, std::string variant, std::string strategy,
-                   CSC *B, CSC *L, int num_thread);
+                   CSC *B, int l_nnz, int num_threads);
 
 
 }

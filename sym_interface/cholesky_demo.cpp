@@ -123,7 +123,8 @@ int sym_cholesky_demo(int argc, char *argv[]){
   std::cout<<"\n";
  }
 
- print_common(matrix_name, "Cholesky", "", L1_csc, L1_csc, num_threads);
+ print_common(matrix_name, "Cholesky", "", L1_csc, sym_chol->L->p[n], num_threads);
+
  if(mode == 1)
   PRINT_CSV("Sequential Sympiler");
  else

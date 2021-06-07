@@ -18,10 +18,11 @@ include_directories(includes
         ${SYMPILER_UTILE_INC}
         ${SYMPILER_SPARSE_BLAS_INC}
         ${SYMPILER_SPARSE_BLASP_INC}
-        ${SYMPILER_LBC_ROOT}/src/include/
+        ${SYMPILER_LBC_ROOT}/src/includes/
         ${METIS_INCLUDE_DIR}
         ${METIS_INCLUDES}
         )
+
 
 link_directories(
         ${CMAKE_CURRENT_LIST_DIR}/../lib/

@@ -92,14 +92,16 @@ int suite_cholesky_demo(int argc, char *argv[]){
  solve_time.measure_elapsed_time();
 
  double alpha = 1.0, beta=-1.0;
+/*
  cholmod_print_dense(x, "X:",&cm);
  double *tmp = (double*) x->x;
  for (int i = 0; i < 14; ++i) {
   std::cout<<tmp[i]<<",";
  }
  std::cout<<"\n";
+*/
  cholmod_sdmult(Ac,0,&alpha,&beta,x,b,&cm);
- double res = cholmod_norm_dense(b,2,&cm);
+ double res = cholmod_norm_dense(b,0,&cm);
 
  if(header){
   print_common_header();
@@ -108,7 +110,7 @@ int suite_cholesky_demo(int argc, char *argv[]){
   std::cout<<"\n";
  }
 
- print_common(matrix_name, "Cholesky", "", L1_csc, L1_csc, num_threads);
+ print_common(matrix_name, "Cholesky", "", L1_csc, L->nzmax, num_threads);
  if(mode == 1)
   PRINT_CSV("Sequential Sympiler");
  else

@@ -26,5 +26,14 @@ You can follow the [sympiler installation instructions](https://github.com/sympi
 
 
 
-## Adding a new tool
-To add 
+## Exisitng tools
+The current added tools/libraries are:
+
+*Sympiler*: the dependency is already resolved by CMake.
+
+*MKL Library*: CMake can find MKL if it is on the system path 
+or `MKLROOT` is set properly.
+
+*SuiteSparse*: If you install suitesparse and set `SUITEROOT` to where
+suitesparse is installed, then CMake can detect it. 
+

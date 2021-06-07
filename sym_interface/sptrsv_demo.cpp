@@ -102,7 +102,7 @@ int sym_sptrsv_demo(int argc, char *argv[]){
   "\n";
  }
 
- print_common(matrix_name, "SpTRSV", "", L1_csc, L1_csc, num_threads);
+ print_common(matrix_name, "SpTRSV", "", L1_csc, L1_csc->nnz, num_threads);
  PRINT_CSV("Sympiler");
  PRINT_CSV(p2);
  PRINT_CSV(p3);
