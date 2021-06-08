@@ -59,11 +59,11 @@ int mkl_cholesky_demo(int argc, char *argv[]){
    return -1;
   n = L1_csc->n;
  }
- if(argc >= 2)
+ if(argc > 2)
   num_threads = atoi(argv[2]);
- if(argc >= 3)
+ if(argc > 3)
   header = atoi(argv[3]);
- if(argc >= 4)
+ if(argc > 4)
   mode = atoi(argv[4]);
 
  omp_set_num_threads(num_threads);
