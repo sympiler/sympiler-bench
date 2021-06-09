@@ -25,17 +25,20 @@ target_link_libraries(sptrsv_demo
 
 endif()
 
-
-if(EXISTS "$ENV{SUITEROOT}/include/" AND EXISTS "$ENV{SUITEROOT}/lib/")
-    include_directories($ENV{SUITEROOT}/include/)
-    link_directories($ENV{SUITEROOT}/lib/)
+set(SUITESPARSE_INCLUDE_DIR_HINTS $ENV{SUITEROOT}/include)
+set(SUITESPARSE_LIBRARY_DIR_HINTS $ENV{SUITEROOT}/lib)
+find_package(SuiteSparse OPTIONAL_COMPONENTS)
+if(SUITESPARSE_FOUND )
+    include_directories(${SUITESPARSE_INCLUDE_DIRS})
 
     add_executable(suite_cholmod
             suitesparse_cholesky.cpp
             ${fusion_demo_src}
             )
+       message(" ===> ${SUITESPARSE_LIBRARIES}")
     target_link_libraries(suite_cholmod
-            cholmod
+            #cholmod
+            ${SUITESPARSE_LIBRARIES}
             sympiler_utils
             lbc)
 endif()

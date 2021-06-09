@@ -71,8 +71,6 @@ int suite_cholesky_demo(int argc, char *argv[]){
  FILE *ff = fopen(f1.c_str(),"r");
  Ac = cholmod_read_sparse(ff,&cm);
 
-/// Solving the linear system
-
   b = cholmod_allocate_dense(L1_csc->m, 1, L1_csc->m, CHOLMOD_REAL, &cm);
   double *solution = (double *)b->x;
   std::fill_n(solution, n, 1.0);
@@ -111,10 +109,7 @@ int suite_cholesky_demo(int argc, char *argv[]){
  }
 
  print_common(matrix_name, "Cholesky", "", L1_csc, L->nzmax, num_threads);
- if(mode == 1)
-  PRINT_CSV("Sequential Sympiler");
- else
-  PRINT_CSV("CHOLMOD");
+ PRINT_CSV("CHOLMOD");
  PRINT_CSV(p2);
  PRINT_CSV(p3);
  PRINT_CSV(symbolic_time.elapsed_time);
