@@ -88,6 +88,8 @@ int sym_cholesky_demo(int argc, char *argv[]){
  solve_time.measure_elapsed_time();
 
  sym_chol->compute_norms();
+ size_t  nnz_l = sym_chol->L->p[n];
+ double total_flops = sym_chol->L->fl + (2*nnz_l) + n;
 
 #ifdef MRHS
 /// Method 2 of calling Cholesky with multiple RHS
@@ -120,6 +122,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
   print_common_header();
   std::cout<<TOOL<<",LBC P1,LBC P2,";
   std::cout<<SYM_TIME<<","<<FCT_TIME","<<SOLVE_TIME<<","<<RESIDUAL<<",";
+  std::cout<<FLOPS<<",";
   std::cout<<"\n";
  }
 
@@ -135,6 +138,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  PRINT_CSV(factor_time.elapsed_time);
  PRINT_CSV(solve_time.elapsed_time);
  PRINT_CSV(sym_chol->res_l1);
+ PRINT_CSV(total_flops);
 
 #ifdef MRHS
  PRINT_CSV(solve_time1.elapsed_time);

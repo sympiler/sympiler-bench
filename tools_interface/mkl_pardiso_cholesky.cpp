@@ -121,7 +121,7 @@ int mkl_cholesky_demo(int argc, char *argv[]){
  iparm[15] = 0;        /* Not in use */
  iparm[16] = 0;        /* Not in use */
  iparm[17] = -1;       /* Output: Number of nonzeros in the factor LU */
- iparm[18] = 1;       /* Output: Mflops for LU factorization */
+ iparm[18] = -1;       /* Output: Mflops for LU factorization */
  iparm[19] = 0;        /* Output: Numbers of CG Iterations */
  iparm[20] = 1; /*using bunch kaufman pivoting*/
  iparm[55] = 0; /*Diagonal and pivoting control., default is zero*/
@@ -212,24 +212,27 @@ int mkl_cholesky_demo(int argc, char *argv[]){
 
  double res_l1 = sym_lib::parsy::norm_dense(1, n, b, 0);
 
+ int nnz_l = iparm[17];
+ double fl = iparm[18]*1e6;
+ double total_flops = fl + (2*nnz_l) + n;
+
  if(header){
   print_common_header();
   std::cout<<TOOL<<",LBC P1,LBC P2,";
   std::cout<<SYM_TIME<<","<<FCT_TIME","<<SOLVE_TIME<<","<<RESIDUAL<<",";
+  std::cout<<FLOPS<<",";
   std::cout<<"\n";
  }
 
  print_common(matrix_name, "Cholesky", "", L1_csc, (int)iparm[36], num_threads);
- if(mode == 1)
-  PRINT_CSV("Sequential Sympiler");
- else
-  PRINT_CSV("Parallel Sympiler");
+ PRINT_CSV("MKL Pardiso");
  PRINT_CSV(p2);
  PRINT_CSV(p3);
  PRINT_CSV(symbolic_time.elapsed_time);
  PRINT_CSV(factor_time.elapsed_time);
  PRINT_CSV(solve_time.elapsed_time);
  PRINT_CSV(res_l1);
+ PRINT_CSV(total_flops);
 
 
 /* -------------------------------------------------------------------- */

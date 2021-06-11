@@ -101,10 +101,13 @@ int suite_cholesky_demo(int argc, char *argv[]){
  cholmod_sdmult(Ac,0,&alpha,&beta,x,b,&cm);
  double res = cholmod_norm_dense(b,0,&cm);
 
+ double total_flops = cm.fl + (2*cm.lnz) + n;//+ solve
+
  if(header){
   print_common_header();
   std::cout<<TOOL<<",LBC P1,LBC P2,";
   std::cout<<SYM_TIME<<","<<FCT_TIME","<<SOLVE_TIME<<","<<RESIDUAL<<",";
+  std::cout<<FLOPS<<",";
   std::cout<<"\n";
  }
 
@@ -116,6 +119,7 @@ int suite_cholesky_demo(int argc, char *argv[]){
  PRINT_CSV(factor_time.elapsed_time);
  PRINT_CSV(solve_time.elapsed_time);
  PRINT_CSV(res);
+ PRINT_CSV(total_flops);
 
 #ifdef MRHS
  PRINT_CSV(solve_time1.elapsed_time);

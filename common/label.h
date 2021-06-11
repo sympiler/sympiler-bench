@@ -11,6 +11,7 @@
 #define FCT_TIME "Factorization Time (sec)"
 #define SOLVE_TIME "Solve Time (sec)"
 #define RESIDUAL "Residual Norm"
+#define FLOPS "FLOPs"
 
 
 #endif //SYMPILER_BENCH_LABEL_H
