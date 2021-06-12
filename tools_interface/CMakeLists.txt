@@ -33,14 +33,12 @@ if(SUITESPARSE_FOUND )
 
     add_executable(suite_cholmod
             suitesparse_cholesky.cpp
-            ${fusion_demo_src}
             )
        message(" ===> ${SUITESPARSE_LIBRARIES}")
     target_link_libraries(suite_cholmod
             #cholmod
             ${SUITESPARSE_LIBRARIES}
-            sympiler_utils
-            lbc)
+            )
 endif()
 
 
