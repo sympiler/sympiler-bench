@@ -7,11 +7,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 project(sympiler_bench)
 
 
-set(SYMPILER_UTIL_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/utils/includes")
-set(SYMPILER_UTILE_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/utils/external/includes")
-set(SYMPILER_UTIL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/utils/")
-set(SYMPILER_SPARSE_BLAS_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/sparse_blas/includes")
-set(SYMPILER_SPARSE_BLASP_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/sparse_blas/includes/parsy")
+set(SYMPILER_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/includes/")
+set(SYMPILER_LBC_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/lbc/includes/")
 set(SYMPILER_LBC_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/lbc/")
 
 
@@ -68,11 +65,8 @@ endif()
 
 
 include_directories(includes
-        ${SYMPILER_UTIL_INC}
-        ${SYMPILER_UTILE_INC}
-        ${SYMPILER_SPARSE_BLAS_INC}
-        ${SYMPILER_SPARSE_BLASP_INC}
-        ${SYMPILER_LBC_ROOT}/src/include/
+        ${SYMPILER_INC}
+        ${SYMPILER_LBC_INC}
         )
 
 set(CMAKE_CXX_STANDARD 11)
@@ -82,7 +76,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -w -m64")
 
 
 add_subdirectory(sympiler)
-add_subdirectory(sym_interface)
 add_subdirectory(tools_interface)
-
+add_subdirectory(sym_interface)
 
