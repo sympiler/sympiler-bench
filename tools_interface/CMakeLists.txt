@@ -67,15 +67,13 @@ if(EXISTS "${PARDISO_LIB_DIR}" AND MKL_FOUND)
 
 
     link_directories(${PARDISO_LIB_DIR}
-            "/usr/lib/gcc/x86_64-linux-gnu/5/"
-           # "/home/kazem/anaconda3/envs/ml_env/lib/"
             )
     add_executable(pardiso6_cholesky ${SOURCE_FILES} pardiso_cholesky.cpp)
     target_link_libraries(pardiso6_cholesky
             gfortran
-#            "/home/kazem/anaconda3/envs/ml_env/lib/libgfortran.so"
             pardiso600-GNU720-X86-64
             #pardiso600-GNU800-X86-64
+            lapack
             ${MKL_LIBRARIES}
             )
 endif()

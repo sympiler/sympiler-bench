@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <omp.h>
-#include <c++/7/string>
+//#include <c++/7/string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -171,7 +171,7 @@ int main( int argc, char *argv[] )
  int *ia, *ja;
  double *a;
 
- int iter_no=5;
+ int iter_no=1;
 
  readMatrix(f1, n, nnz, ia, ja, a);
 
@@ -241,7 +241,7 @@ int main( int argc, char *argv[] )
   sscanf( var, "%d", &num_procs );
  else {
   printf("Set environment OMP_NUM_THREADS to 1");
-  exit(1);
+  //exit(1);
  }
  iparm[2]  = num_procs;
  iparm[51] = 1;
@@ -348,7 +348,7 @@ int main( int argc, char *argv[] )
 /* -------------------------------------------------------------------- */
  phase = 33;
 
- iparm[7] = 1;       /* Max numbers of iterative refinement steps. */
+ //iparm[7] = 1;       /* Max numbers of iterative refinement steps. */
 
  pardiso (pt, &maxfct, &mnum, &mtype, &phase,
           &n, a, ia, ja, &idum, &nrhs,

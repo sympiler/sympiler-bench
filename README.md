@@ -37,3 +37,6 @@ or `MKLROOT` is set properly.
 *SuiteSparse*: If you install suitesparse and set `SUITEROOT` to where
 suitesparse is installed, then CMake can detect it. 
 
+*Pardiso*: The path to Pardiso library should be in `PARDISO_LIB`.
+The Pardiso library that is used in the demo is `pardiso600-GNU720-X86-64`.
+Pardiso also needs `lapack` library as a dependency. 
