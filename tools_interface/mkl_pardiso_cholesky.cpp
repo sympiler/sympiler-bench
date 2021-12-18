@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sparse_io.h>
 #include <test_utils.h>
-#include <omp.h>
+//#include <omp.h>
 #include <metis_interface.h>
 #include <parsy/cholesky_solver.h>
 #include <mkl_types.h>
@@ -66,7 +66,8 @@ int mkl_cholesky_demo(int argc, char *argv[]){
  if(argc > 4)
   mode = atoi(argv[4]);
 
- omp_set_num_threads(num_threads);
+ //omp_set_num_threads(num_threads);
+ mkl_set_num_threads(num_threads);
 /// Method 1 of calling Cholesky
  auto *solution = new double[n];
  std::fill_n(solution, n, 1.0);

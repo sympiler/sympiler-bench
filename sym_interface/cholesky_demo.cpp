@@ -1,11 +1,13 @@
 //
 // Created by kazem on 4/30/21.
 //
-
+#define CSV_LOG 1
 #include <iostream>
 #include <sparse_io.h>
 #include <test_utils.h>
+#ifdef OPENMP
 #include <omp.h>
+#endif
 #include <metis_interface.h>
 #include <parsy/cholesky_solver.h>
 #include "../common/FusionDemo.h"
@@ -59,8 +61,10 @@ int sym_cholesky_demo(int argc, char *argv[]){
  if(argc > 4)
   mode = atoi(argv[4]);
 
+#ifdef OPENMP
  omp_set_num_threads(num_threads);
-/// Method 1 of calling Cholesky
+#endif
+ /// Method 1 of calling Cholesky
  auto *solution = new double[n];
  std::fill_n(solution, n, 1.0);
 

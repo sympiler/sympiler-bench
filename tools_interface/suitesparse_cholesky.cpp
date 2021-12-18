@@ -2,10 +2,13 @@
 // Created by kazem on 6/7/21.
 //
 
+#define CSV_LOG 1
 #include <sparse_io.h>
 #include <test_utils.h>
 #include <sparse_utilities.h>
+#ifdef OPENMP
 #include <omp.h>
+#endif
 #include "cholmod.h"
 #include "../common/label.h"
 using namespace sym_lib;
@@ -37,8 +40,10 @@ int suite_cholesky_demo(int argc, char *argv[]){
   header = atoi(argv[3]);
  if(argc > 4)
   mode = atoi(argv[4]);
+#ifdef OPENMP
  omp_set_num_threads(num_threads);
-/// Method 1 of calling Cholesky
+#endif
+ /// Method 1 of calling Cholesky
 
 
  std::string f1 = argv[1];

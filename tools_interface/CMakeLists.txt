@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 
 
 
@@ -15,11 +15,12 @@ set(fusion_demo_src  "${CMAKE_CURRENT_LIST_DIR}/../common/FusionDemo.cpp" )
 project(tools_demo)
 
 
-find_package(MKL REQUIRED)
+find_package(MKL OPTIONAL_COMPONENTS)
 if(MKL_FOUND)
     include_directories(
             ${MKL_INCLUDE_DIR}
     )
+
     add_executable(mkl_pardiso_cholesky
             mkl_pardiso_cholesky.cpp
             ${fusion_demo_src}
@@ -27,7 +28,6 @@ if(MKL_FOUND)
 
     target_link_libraries(mkl_pardiso_cholesky
             ${MKL_LIBRARIES}
-            sympiler_utils
             lbc
             sym_sparse_blas  # added for spmv testing
             )

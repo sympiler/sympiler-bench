@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 
 
 
@@ -39,9 +39,10 @@ set(ALL_LIBS
 
 
 project(sympiler_demo)
-
 add_executable(sym_sptrsv
-        sptrsv_demo.cpp ../common/FusionDemo.cpp)
+        sptrsv_demo.cpp
+        ../common/FusionDemo.cpp
+        )
 
 target_link_libraries(sym_sptrsv PRIVATE
         lbc
@@ -49,8 +50,11 @@ target_link_libraries(sym_sptrsv PRIVATE
         ${METIS_LIB}
         )
 
+
 add_executable(sym_cholesky
-        cholesky_demo.cpp ../common/FusionDemo.cpp)
+        cholesky_demo.cpp
+        ../common/FusionDemo.cpp
+        )
 target_link_libraries(sym_cholesky PRIVATE
         lbc
         sym_sparse_blas
