@@ -88,8 +88,11 @@ int sym_cholesky_demo(int argc, char *argv[]){
  sym_chol->req_ref_iter = 0;
  sym_chol->solver_mode = 0;
 // sym_chol->sym_order = sym_lib::parsy::S_METIS;
- if(ord != 0)
+ if(ord != 0) // selecting metis ordering
    sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_METIS;
+ // changing LBC params
+ sym_chol->level_param = p2;
+ sym_chol->final_seq_node = p3;
  timing_measurement symbolic_time, factor_time, solve_time;
  symbolic_time.start_timer();
  sym_chol->symbolic_analysis();
