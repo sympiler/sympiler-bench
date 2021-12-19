@@ -4,6 +4,9 @@ TOOLBIN=$1
 DATAPATH=$2
 THREADS=$3
 VAR=$4
+VAR5=$5
+VAR6=$6
+VAR7=$7
 header=1
 #echo "Running $TOOLBIN for dataset in $DATAPATH ..."
 

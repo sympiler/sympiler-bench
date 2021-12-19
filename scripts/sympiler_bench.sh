@@ -56,3 +56,10 @@ if [ $Kernel -eq 1 ]; then
  bash run_tool.sh $BIN_DIR/tools_interface/mkl_pardiso_cholesky $DATA_DIR  $THREADS 1> ${REPORT_DIR}/mkl_pardiso_parallel.csv
 fi
 
+if [ $Kernel -eq 2 ]; then
+ for i in {3,2,1,0,-1,-2,-3}; do
+   for j in {5,10,100,1000,4000}; do
+     bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 1 1 $i $j >> ${REPORT_DIR}/sympiler_serial.csv
+   done
+ done
+fi

@@ -69,6 +69,10 @@ int sym_cholesky_demo(int argc, char *argv[]){
   mode = atoi(argv[4]);
  if(argc > 5)
   ord = atoi(argv[5]);
+ if(argc > 6)
+  p2 = atoi(argv[6]);
+ if(argc > 7)
+  p3 = atoi(argv[7]);
 
 #ifdef OPENMP
  omp_set_num_threads(num_threads);
