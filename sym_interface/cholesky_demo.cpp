@@ -31,7 +31,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  CSR *L2_csr;
  size_t n;
  int num_threads = 6;
- int p2 = -1, p3 = 4000; // LBC params
+ int p2 = -3, p3 = 4000; // LBC params
  int header = 0;
  int mode = 1; int ord = 0;
  int *perm;

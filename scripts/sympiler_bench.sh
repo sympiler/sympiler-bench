@@ -37,7 +37,7 @@ cd $BIN_DIR
 rm -rf  CMakeCache*
 #cmake  -DCMAKE_PREFIX_PATH="$MKLROOT/lib/intel64;/home/m/mmehride/kazem/programs/SuiteSparse/;$MKLROOT/include;/home/m/mmehride/kazem/programs/SuiteSparse/include/;/home/m/mmehride/kazem/programs/SuiteSparse/lib/" -DCMAKE_CXX_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/g++  -DCMAKE_C_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/gcc  -DCMAKE_BUILD_TYPE=Release ../
 #cmake   -DCMAKE_CXX_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/g++  -DCMAKE_C_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/gcc  -DCMAKE_BUILD_TYPE=Release ../
-cmake   -DCMAKE_BUILD_TYPE=Release ../
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake   -DCMAKE_BUILD_TYPE=Release ../
 make
 
 
@@ -59,7 +59,7 @@ fi
 if [ $Kernel -eq 2 ]; then
  for i in {3,2,1,0,-1,-2,-3}; do
    for j in {5,10,100,1000,4000}; do
-     bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 1 1 $i $j >> ${REPORT_DIR}/sympiler_serial.csv
+     bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 1 1 $i $j >> ${REPORT_DIR}/sympiler_tuned.csv
    done
  done
 fi
