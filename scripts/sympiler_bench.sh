@@ -13,11 +13,12 @@ module load cmake/3.17.3
 #module load intel/2019u4
 module load intel/2020u4
 
-export SUITEROOT=/home/m/mmehride/kazem/programs/SuiteSparse/
+#export SUITEROOT=/home/m/mmehride/kazem/programs/SuiteSparse/
+#export SUITEROOT=/Users/kazem/programs/SuiteSparse/
 #export SUITEROOT=/home/kazem/programs/SuiteSparse/
 #export METISROOT=/home/m/mmehride/kazem/programs/SuiteSparse/lib/
 export METISROOT=/scinet/niagara/software/2019b/opt/intel-2019u4/metis/5.1.0/lib/
-THREADS=20
+THREADS=4
 export OMP_NUM_THREADS=$THREADS
 export MKL_NUM_THREADS=$THREADS
 
@@ -30,6 +31,7 @@ BIN_DIR=$SCRIPT_DIR/../build/
 DATA_DIR=$SCRIPT_DIR/../DB/
 
 
+
 #### Building the benchmark
 echo "Building ..."
 mkdir $BIN_DIR
@@ -37,7 +39,7 @@ cd $BIN_DIR
 rm -rf  CMakeCache*
 #cmake  -DCMAKE_PREFIX_PATH="$MKLROOT/lib/intel64;/home/m/mmehride/kazem/programs/SuiteSparse/;$MKLROOT/include;/home/m/mmehride/kazem/programs/SuiteSparse/include/;/home/m/mmehride/kazem/programs/SuiteSparse/lib/" -DCMAKE_CXX_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/g++  -DCMAKE_C_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/gcc  -DCMAKE_BUILD_TYPE=Release ../
 #cmake   -DCMAKE_CXX_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/g++  -DCMAKE_C_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/gcc  -DCMAKE_BUILD_TYPE=Release ../
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake   -DCMAKE_BUILD_TYPE=Release ../
+cmake   -DCMAKE_BUILD_TYPE=Release ../
 make
 
 
@@ -59,7 +61,7 @@ fi
 if [ $Kernel -eq 2 ]; then
  for i in {3,2,1,0,-1,-2,-3}; do
    for j in {5,10,100,1000,4000}; do
-     bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 1 1 $i $j >> ${REPORT_DIR}/sympiler_tuned.csv
+     bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 4 1 $i $j >> ${REPORT_DIR}/sympiler_tuned.csv
    done
  done
 fi
