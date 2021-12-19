@@ -33,7 +33,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  int num_threads = 6;
  int p2 = -1, p3 = 4000; // LBC params
  int header = 0;
- int mode = 1;
+ int mode = 1; int ord = 0;
  int *perm;
  std::string matrix_name;
  std::vector<timing_measurement> time_array;
@@ -46,10 +46,17 @@ int sym_cholesky_demo(int argc, char *argv[]){
   if (A == NULLPNTR)
    return -1;
   L1_csc = make_half(A->n, A->p, A->i, A->x);
+  delete A;
  } else {
   std::string f1 = argv[1];
   matrix_name = f1;
-  L1_csc = read_mtx(f1);
+  A = read_mtx(f1);
+  if(A->stype == 0){
+   L1_csc = make_half(A->n, A->p, A->i, A->x);
+   delete A;
+  } else {
+   L1_csc = A;
+  }
   if (L1_csc == NULLPNTR)
    return -1;
   n = L1_csc->n;
@@ -60,6 +67,8 @@ int sym_cholesky_demo(int argc, char *argv[]){
   header = atoi(argv[3]);
  if(argc > 4)
   mode = atoi(argv[4]);
+ if(argc > 5)
+  ord = atoi(argv[5]);
 
 #ifdef OPENMP
  omp_set_num_threads(num_threads);
@@ -79,7 +88,8 @@ int sym_cholesky_demo(int argc, char *argv[]){
  sym_chol->req_ref_iter = 0;
  sym_chol->solver_mode = 0;
 // sym_chol->sym_order = sym_lib::parsy::S_METIS;
- //sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_METIS;
+ if(ord != 0)
+   sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_METIS;
  timing_measurement symbolic_time, factor_time, solve_time;
  symbolic_time.start_timer();
  sym_chol->symbolic_analysis();
@@ -152,7 +162,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
 #endif
 
  delete []solution;
- delete A;
+ //delete A;
  delete L1_csc;
  delete H;
  delete sym_chol;

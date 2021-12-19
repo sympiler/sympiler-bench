@@ -2,6 +2,7 @@
 // Created by kazem on 6/7/21.
 //
 
+#define CSV_LOG 1
 #include <iostream>
 #include <sparse_io.h>
 #include <test_utils.h>
@@ -51,10 +52,17 @@ int mkl_cholesky_demo(int argc, char *argv[]){
   if (A == NULLPNTR)
    return -1;
   L1_csc = make_half(A->n, A->p, A->i, A->x);
+  delete A;
  } else {
   std::string f1 = argv[1];
   matrix_name = f1;
-  L1_csc = read_mtx(f1);
+  A = read_mtx(f1);
+  if(A->stype == 0){
+   L1_csc = make_half(A->n, A->p, A->i, A->x);
+   delete A;
+  } else {
+   L1_csc = A;
+  }
   if (L1_csc == NULLPNTR)
    return -1;
   n = L1_csc->n;
@@ -246,7 +254,6 @@ int mkl_cholesky_demo(int argc, char *argv[]){
 
 
  delete []solution;
- delete A;
  delete L1_csc;
 
  mkl_free(x);

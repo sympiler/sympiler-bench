@@ -50,6 +50,8 @@ mkdir $REPORT_DIR
 if [ $Kernel -eq 1 ]; then
  bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 1 > ${REPORT_DIR}/sympiler_serial.csv
  bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 4 > ${REPORT_DIR}/sympiler_parallel.csv
+ bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 1 1 > ${REPORT_DIR}/sympiler_serial_metis.csv
+ bash run_tool.sh $BIN_DIR/sym_interface/sym_cholesky $DATA_DIR  $THREADS 4 1 > ${REPORT_DIR}/sympiler_parallel_metis.csv
  bash run_tool.sh $BIN_DIR/tools_interface/suite_cholmod $DATA_DIR  $THREADS 1 > ${REPORT_DIR}/cholmod_parallel.csv
  bash run_tool.sh $BIN_DIR/tools_interface/mkl_pardiso_cholesky $DATA_DIR  $THREADS 1> ${REPORT_DIR}/mkl_pardiso_parallel.csv
 fi
