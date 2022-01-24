@@ -65,7 +65,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
   num_threads = atoi(argv[2]);
  if(argc > 3)
   header = atoi(argv[3]);
- if(argc > 4)
+ if(argc > 4) // mode 1 :sequential sympiler, mode4: parallel sympiler
   mode = atoi(argv[4]);
  if(argc > 5)
   ord = atoi(argv[5]);
