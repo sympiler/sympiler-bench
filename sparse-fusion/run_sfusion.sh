@@ -13,7 +13,7 @@
 BINPATH="singularity exec artifact.sif /source/fusion/build/demo/"
 LOGS=./logs/ 
 SCRIPTPATH=./
-UFDB=$HOME/test/ # ./mm/
+UFDB=./mm/
 THRD=24
 export OMP_NUM_THREADS=24
 
