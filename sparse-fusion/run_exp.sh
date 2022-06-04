@@ -23,7 +23,7 @@ for mat in $MATSPD; do
 #	for cparm in {1,2,3,4,5,10,20}; do
 	$BINLIB  $PATHMAIN/$mat $k $header $THRDS
 	echo ""
-	if [ $header -eq 1 ]; then
+	if [ "$header" == 1 ]; then
      header=0
   fi
 #done
@@ -38,11 +38,11 @@ MATSP="Flan_1565.mtx bone010.mtx Hook_1498.mtx af_shell10.mtx Emilia_923.mtx Sto
 if [ "$TUNED" ==  4 ]; then
 for mat in $MATSP; do
 k=4
-	echo $BINLIB  "$PATHMAIN/${mat}" $k $header $THRDS
+	$BINLIB  "$PATHMAIN/${mat}" $k $header $THRDS
 	echo ""
-	if [ $header -eq 1 ]; then
-     header=0
-  fi
+	if [ "$header" == 1 ]; then
+          header=0
+        fi
 done
 fi
 
