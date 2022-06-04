@@ -22,10 +22,17 @@ mkdir $LOGS/dagp
 
 
 # DAGP
-   bash $SCRIPTPATH/run_exp.sh  $BINPATH/dagp_demo $UFDB 4 $THRD > $LOGS/dagp/dagp_kernels.csv
+bash $SCRIPTPATH/run_exp.sh  $BINPATH/dagp_demo $UFDB 4 $THRD > $LOGS/dagp/dagp_kernels.csv
+
+mkdir $LOGS/plots
+
+ for f in $LOGS/*.csv; do
+ 	python3 graph_gen.py -i $f -o $LOGS/plots/
+ done
 
 
- python3 graph_gen.py -
+ python3 graph_gen.py -d $LOGS/plots/
+
 
 
 
