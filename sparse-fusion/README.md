@@ -47,11 +47,13 @@ You might need to update scripts with new absolute paths to the dataset and the 
 * The DAGP evaluation (Experiment 3) can be reproduced by calling:
 ```
 bash run_dagp.sh
-```    
+``` 
+
 
 * The Gauss-Seidel case study (Experiment 4) can be reproduced by calling:
 ```
 	bash run_gs.sh
 ```
     
-* all results should be stored as CSV files under the _./logs/_ directory.    
+* Upon successful completion of experiments, all results should be stored as comma separated values (CSV) files under the _./logs/_ directory and are ready to be plotted. Separated Python scripts are provided and called inside the bash files to create plots. Plots are stored in the current directory as PDF files.
+
