@@ -4,16 +4,16 @@
 
 #define CSV_LOG 1
 #include <iostream>
-#include <sparse_io.h>
-#include <test_utils.h>
+#include <aggregation/sparse_io.h>
+#include <aggregation/test_utils.h>
 //#include <omp.h>
-#include <metis_interface.h>
-#include <parsy/cholesky_solver.h>
+#include <aggregation/metis_interface.h>
+#include <sympiler/parsy/cholesky_solver.h>
 #include <mkl_types.h>
 #include <mkl_service.h>
 #include <mkl.h>
-#include <parsy/matrixVector/spmv_CSC.h>
-#include <parsy/common/Norm.h>
+#include <sympiler/parsy/matrixVector/spmv_CSC.h>
+#include <sympiler/parsy/common/Norm.h>
 #include "../common/FusionDemo.h"
 #include "../common/label.h"
 using namespace sym_lib;

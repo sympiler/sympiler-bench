@@ -14,23 +14,27 @@ set(fusion_demo_src  "${CMAKE_CURRENT_LIST_DIR}/../common/FusionDemo.cpp" )
 
 project(tools_demo)
 
+#set(MKL_THREADING OMP)
+if (NOT TARGET MKL::MKL)
+    set(MKL_INTERFACE "lp64")
+    find_package(MKL CONFIG)
+endif()
 
-find_package(MKL OPTIONAL_COMPONENTS)
-if(MKL_FOUND)
-    include_directories(
-            ${MKL_INCLUDE_DIR}
-    )
-
+if(TARGET MKL::MKL )
     add_executable(mkl_pardiso_cholesky
             mkl_pardiso_cholesky.cpp
             ${fusion_demo_src}
             )
-
-    target_link_libraries(mkl_pardiso_cholesky
-            ${MKL_LIBRARIES}
-            lbc
-            sym_sparse_blas  # added for spmv testing
+    target_include_directories(mkl_pardiso_cholesky PRIVATE
+            $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES>
             )
+    target_link_libraries(mkl_pardiso_cholesky PRIVATE
+            $<LINK_ONLY:MKL::MKL>
+            sym_sparse_blas  # added for spmv testing
+            aggregation
+            )
+    target_compile_definitions(mkl_pardiso_cholesky PRIVATE
+            "MKL_BLAS")
 
 endif()
 
@@ -39,15 +43,16 @@ set(SUITESPARSE_INCLUDE_DIR_HINTS $ENV{SUITEROOT}/include)
 set(SUITESPARSE_LIBRARY_DIR_HINTS $ENV{SUITEROOT}/lib)
 find_package(SuiteSparse OPTIONAL_COMPONENTS)
 if(SUITESPARSE_FOUND )
-    include_directories(${SUITESPARSE_INCLUDE_DIRS})
-
     add_executable(suite_cholmod
             suitesparse_cholesky.cpp
             )
-#       message(" ===> ${SUITESPARSE_LIBRARIES}")
-    target_link_libraries(suite_cholmod
+    target_include_directories(suite_cholmod PRIVATE
+            $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES>
+            ${SUITESPARSE_INCLUDE_DIRS}
+            )
+    target_link_libraries(suite_cholmod PRIVATE
             #cholmod
-            ${MKL_LIBRARIES}
+            $<LINK_ONLY:MKL::MKL>
             ${SUITESPARSE_LIBRARIES}
             )
 endif()

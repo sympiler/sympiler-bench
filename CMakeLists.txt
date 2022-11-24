@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.15)
+cmake_minimum_required( VERSION 3.19)
 
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/sympiler/cmake/)
@@ -8,8 +8,8 @@ project(sympiler_bench)
 
 
 set(SYMPILER_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/include/")
-set(SYMPILER_LBC_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/lbc/include/")
-set(SYMPILER_LBC_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/lbc/")
+set(SYMPILER_LBC_INC "${CMAKE_CURRENT_SOURCE_DIR}/sympiler/aggregation/include/")
+#set(SYMPILER_LBC_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/sympiler//")
 
 
 # Find OpenMP

@@ -3,9 +3,7 @@
 //
 
 #define CSV_LOG 1
-#include <sparse_io.h>
-#include <test_utils.h>
-#include <sparse_utilities.h>
+#include <aggregation/sparse_io.h>
 #ifdef OPENMP
 #include <omp.h>
 #endif
@@ -94,7 +92,7 @@ int suite_cholesky_demo(int argc, char *argv[]){
             "Metis Enabled,Number of Threads");
   std::cout<<TOOL<<",LBC P1,LBC P2,";
   std::cout<<SYM_TIME<<","<<FCT_TIME","<<SOLVE_TIME<<","<<RESIDUAL<<",";
-  std::cout<<FLOPS<<",";
+  std::cout<<FLOPS<<","<<"Supernodal Enabled";
   std::cout<<"\n";
  }
 
@@ -115,6 +113,7 @@ int suite_cholesky_demo(int argc, char *argv[]){
  PRINT_CSV(solve_time.elapsed_time);
  PRINT_CSV(res);
  PRINT_CSV(total_flops);
+ PRINT_CSV(L->is_super);
 
 #ifdef MRHS
  PRINT_CSV(solve_time1.elapsed_time);

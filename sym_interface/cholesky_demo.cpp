@@ -3,13 +3,13 @@
 //
 #define CSV_LOG 1
 #include <iostream>
-#include <sparse_io.h>
-#include <test_utils.h>
+#include <aggregation/sparse_io.h>
+#include <aggregation/test_utils.h>
 #ifdef OPENMP
 #include <omp.h>
 #endif
-#include <metis_interface.h>
-#include <parsy/cholesky_solver.h>
+#include <aggregation/metis_interface.h>
+#include <sympiler/parsy/cholesky_solver.h>
 #include "../common/FusionDemo.h"
 #include "../common/label.h"
 using namespace sym_lib;
@@ -94,6 +94,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
 // sym_chol->sym_order = sym_lib::parsy::S_METIS;
  if(ord != 0) // selecting metis ordering
    sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_METIS;
+ //sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_SCOTCH;
  // changing LBC params
  sym_chol->level_param = p2;
  sym_chol->final_seq_node = p3;
