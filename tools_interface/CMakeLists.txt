@@ -47,14 +47,21 @@ if(SUITESPARSE_FOUND )
             suitesparse_cholesky.cpp
             )
     target_include_directories(suite_cholmod PRIVATE
-            $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES>
             ${SUITESPARSE_INCLUDE_DIRS}
             )
     target_link_libraries(suite_cholmod PRIVATE
-            #cholmod
-            $<LINK_ONLY:MKL::MKL>
             ${SUITESPARSE_LIBRARIES}
+#            BLAS::BLAS
             )
+    if(TARGET MKL::MKL )
+        target_include_directories(suite_cholmod PRIVATE
+               $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES>
+                )
+        target_link_libraries(suite_cholmod PRIVATE
+                            $<LINK_ONLY:MKL::MKL>
+                )
+    endif()
+
 endif()
 
 

@@ -7,18 +7,18 @@
 #SBATCH --output="symbench.%j.%N.out"
 #SBATCH -t 24:00:00
 
-module load NiaEnv/2019b
-module load cmake/3.17.3
+#module load NiaEnv/2019b
+#module load cmake/3.17.3
 #module load intel
 #module load intel/2019u4
-module load intel/2020u4
+#module load intel/2020u4
 
 #export SUITEROOT=/home/m/mmehride/kazem/programs/SuiteSparse/
 #export SUITEROOT=/Users/kazem/programs/SuiteSparse/
 #export SUITEROOT=/home/kazem/programs/SuiteSparse/
 #export METISROOT=/home/m/mmehride/kazem/programs/SuiteSparse/lib/
 export METISROOT=/scinet/niagara/software/2019b/opt/intel-2019u4/metis/5.1.0/lib/
-THREADS=4
+THREADS=8
 export OMP_NUM_THREADS=$THREADS
 export MKL_NUM_THREADS=$THREADS
 
@@ -39,8 +39,9 @@ cd $BIN_DIR
 rm -rf  CMakeCache*
 #cmake  -DCMAKE_PREFIX_PATH="$MKLROOT/lib/intel64;/home/m/mmehride/kazem/programs/SuiteSparse/;$MKLROOT/include;/home/m/mmehride/kazem/programs/SuiteSparse/include/;/home/m/mmehride/kazem/programs/SuiteSparse/lib/" -DCMAKE_CXX_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/g++  -DCMAKE_C_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/gcc  -DCMAKE_BUILD_TYPE=Release ../
 #cmake   -DCMAKE_CXX_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/g++  -DCMAKE_C_COMPILER=/scinet/niagara/software/2019b/opt/base/gcc/8.3.0/bin/gcc  -DCMAKE_BUILD_TYPE=Release ../
-cmake   -DCMAKE_BUILD_TYPE=Release ../
-make
+cmake  -DSYMPILER_BLAS_BACKEND=Apple -DSYMPILER_USE_TBB=ON -DCMAKE_BUILD_TYPE=Release ../
+#cmake   -DCMAKE_BUILD_TYPE=Release ../
+make -j 8 sym_cholesky suite_cholmod
 
 
 #### Running the benchmark
