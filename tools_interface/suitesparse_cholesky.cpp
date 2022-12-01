@@ -92,7 +92,7 @@ int suite_cholesky_demo(int argc, char *argv[]){
             "Metis Enabled,Number of Threads");
   std::cout<<TOOL<<",LBC P1,LBC P2,";
   std::cout<<SYM_TIME<<","<<FCT_TIME","<<SOLVE_TIME<<","<<RESIDUAL<<",";
-  std::cout<<FLOPS<<","<<"Supernodal Enabled";
+  std::cout<<FLOPS<<","<<"Supernodal Enabled,";
   std::cout<<"\n";
  }
 
