@@ -108,7 +108,6 @@ int sym_cholesky_demo(int argc, char *argv[]){
  solve_time.start_timer();
  double *x = sym_chol->solve_only();
  solve_time.measure_elapsed_time();
-
  sym_chol->compute_norms();
  size_t  nnz_l = sym_chol->L->p[n];
  double total_flops = sym_chol->L->fl + (2*nnz_l) + n;
@@ -143,6 +142,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  if(header){
   print_common_header();
   std::cout<<TOOL<<",LBC P1,LBC P2,";
+  std::cout<<"Ordering,";
   std::cout<<SYM_TIME<<","<<FCT_TIME","<<SOLVE_TIME<<","<<RESIDUAL<<",";
   std::cout<<FLOPS<<",";
   std::cout<<"\n";
@@ -156,6 +156,10 @@ int sym_cholesky_demo(int argc, char *argv[]){
   PRINT_CSV("Parallel Sympiler");
  PRINT_CSV(p2);
  PRINT_CSV(p3);
+ if(ord!=0)
+     PRINT_CSV("METIS");
+ else
+     PRINT_CSV("AMD");
  PRINT_CSV(symbolic_time.elapsed_time);
  PRINT_CSV(factor_time.elapsed_time);
  PRINT_CSV(solve_time.elapsed_time);

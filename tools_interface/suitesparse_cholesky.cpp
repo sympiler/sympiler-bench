@@ -11,6 +11,7 @@
 #include "../common/label.h"
 using namespace sym_lib;
 
+
 /// Evaluate cholesky
 /// \return
 int suite_cholesky_demo(int argc, char *argv[]);
@@ -64,7 +65,6 @@ int suite_cholesky_demo(int argc, char *argv[]){
  symbolic_time.start_timer();
  L = cholmod_analyze(Ac, &cm);
  symbolic_time.measure_elapsed_time();
-
  factor_time.start_timer();
  cholmod_factorize(Ac, L, &cm);
  factor_time.measure_elapsed_time();
