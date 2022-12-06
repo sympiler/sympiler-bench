@@ -17,7 +17,16 @@ The current status:
 
 
 ## Installation
-You can follow the [sympiler installation instructions](https://github.com/sympiler/sympiler). 
+
+```bash
+git  clone --recursive https://github.com/sympiler/sympiler-bench.git
+cd sympiler-bench
+cmake -DCMAKE_BUILD_TYPE=Release  -S . -B build
+cmake --build build --config Release -j 6 
+```
+
+You will need to set currect options, e.g. BLAS type. You can follow the [sympiler installation instructions](https://github.com/sympiler/sympiler). 
+One example script is provided [here](https://github.com/sympiler/sympiler-bench/blob/main/scripts/sympiler_bench.sh)
 
 
 
