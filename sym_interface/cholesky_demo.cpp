@@ -68,7 +68,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  if(argc > 4) // mode 1 :sequential sympiler, mode4: parallel sympiler
   mode = atoi(argv[4]);
  if(argc > 5)
-  ord = atoi(argv[5]);
+  ord = atoi(argv[5]);// 0: AMD, 1: METIS, 3: given
  if(argc > 6)
   p2 = atoi(argv[6]);
  if(argc > 7)
@@ -92,8 +92,19 @@ int sym_cholesky_demo(int argc, char *argv[]){
  sym_chol->req_ref_iter = 0;
  sym_chol->solver_mode = 0;
 // sym_chol->sym_order = sym_lib::parsy::S_METIS;
- if(ord != 0) // selecting metis ordering
+ if(ord == parsy::SYM_ORDER::S_METIS) // selecting metis ordering
    sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_METIS;
+ if(ord == parsy::SYM_ORDER::S_GIVEN){
+  perm = new int[n];
+  // creating a SUPER naive permutation,
+  for (int i = 0; i < n; ++i) {
+   perm[i] = i;// replace it with your permutation
+  }
+  sym_chol->in_perm = new size_t[n]; // TODO: Will make it a method later
+  for (int i = 0; i < n; ++i) {
+   sym_chol->in_perm[i] = perm[i];
+  }
+ }
  //sym_chol->sym_order = sym_lib::parsy::SYM_ORDER::S_SCOTCH;
  // changing LBC params
  sym_chol->level_param = p2;
@@ -112,6 +123,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  size_t  nnz_l = sym_chol->L->p[n];
  double total_flops = sym_chol->L->fl + (2*nnz_l) + n;
 
+//#define MRHS
 #ifdef MRHS
 /// Method 2 of calling Cholesky with multiple RHS
  auto *rhs = new double[3*n];
@@ -156,8 +168,10 @@ int sym_cholesky_demo(int argc, char *argv[]){
   PRINT_CSV("Parallel Sympiler");
  PRINT_CSV(p2);
  PRINT_CSV(p3);
- if(ord!=0)
+ if(ord==parsy::SYM_ORDER::S_METIS)
      PRINT_CSV("METIS");
+ else if(ord==parsy::SYM_ORDER::S_GIVEN)
+     PRINT_CSV("GIVEN");
  else
      PRINT_CSV("AMD");
  PRINT_CSV(symbolic_time.elapsed_time);
@@ -177,6 +191,7 @@ int sym_cholesky_demo(int argc, char *argv[]){
  //delete A;
  delete L1_csc;
  delete H;
+ delete []sym_chol->in_perm;
  delete sym_chol;
 
 
