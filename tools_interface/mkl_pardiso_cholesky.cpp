@@ -219,7 +219,8 @@ int mkl_cholesky_demo(int argc, char *argv[]){
    &alp, &bet, 1, x, b);
  //print_vec("res: ",0,TMP2->ncol,res);
 
- double res_l1 = sym_lib::parsy::norm_dense(1, n, b, 0);
+ double res_l1 = sym_lib::parsy::norm_dense(n, 1, b, 0);
+
 
  int nnz_l = iparm[17];
  double fl = iparm[18]*1e6;
