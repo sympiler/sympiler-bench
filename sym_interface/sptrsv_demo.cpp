@@ -58,7 +58,8 @@ int sym_sptrsv_demo(int argc, char *argv[]){
  omp_set_num_threads(num_threads);
  if(argc >= 4)
   p3 = atoi(argv[3]);
- /// Re-ordering L matrix
+#undef METIS
+/// Re-ordering L matrix
 #ifdef METIS
  //We only reorder L since dependency matters more in l-solve.
  //perm = new int[n]();
